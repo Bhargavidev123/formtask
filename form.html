@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>College Admission Form Validation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        form {
+            max-width: 400px;
+            margin: auto;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+        .error {
+            color: red;
+            font-size: 0.9em;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>College Admission Form</h1>
+    <form id="admissionForm">
+        <div class="form-group">
+            <label for="rollNumber">Roll Number (e.g., 23g21XXX):</label>
+            <input type="text" id="rollNumber" name="rollNumber" required>
+            <div class="error" id="rollNumberError"></div>
+        </div>
+        <div class="form-group">
+            <label for="username">Username (only alphabets):</label>
+            <input type="text" id="username" name="username" required>
+            <div class="error" id="usernameError"></div>
+        </div>
+        <div class="form-group">
+            <label for="mobileNumber">Mobile Number (10 digits):</label>
+            <input type="text" id="mobileNumber" name="mobileNumber" required>
+            <div class="error" id="mobileNumberError"></div>
+        </div>
+        <div class="form-group">
+            <label for="password">Password (6-12 characters, at least one letter and one number):</label>
+            <input type="password" id="password" name="password" required>
+            <div class="error" id="passwordError"></div>
+        </div>
+        <button type="submit">Submit</button>
+    </form>
+
+    <script>
+        document.getElementById('admissionForm').addEventListener('submit', function(event) {
+            let isValid = true;
+
+            // Roll Number Validation
+            const rollNumber = document.getElementById('rollNumber').value;
+            const rollNumberPattern = /^\d{2}[a-zA-Z]\d{2}[a-zA-Z]{3}$/;
+            if (!rollNumberPattern.test(rollNumber)) {
+                isValid = false;
+                document.getElementById('rollNumberError').textContent = 'Invalid roll number format.';
+            } else {
+                document.getElementById('rollNumberError').textContent = '';
+            }
+
+            // Username Validation
+            const username = document.getElementById('username').value;
+            const usernamePattern = /^[a-zA-Z]+$/;
+            if (!usernamePattern.test(username)) {
+                isValid = false;
+                document.getElementById('usernameError').textContent = 'Username must contain only alphabets.';
+            } else {
+                document.getElementById('usernameError').textContent = '';
+            }
+
+            // Mobile Number Validation
+            const mobileNumber = document.getElementById('mobileNumber').value;
+            const mobileNumberPattern = /^\d{10}$/;
+            if (!mobileNumberPattern.test(mobileNumber)) {
+                isValid = false;
+                document.getElementById('mobileNumberError').textContent = 'Mobile number must be 10 digits.';
+            } else {
+                document.getElementById('mobileNumberError').textContent = '';
+            }
+
+            // Password Validation
+            const password = document.getElementById('password').value;
+            const passwordPattern = /^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]{6,12}$/;
+            if (!passwordPattern.test(password)) {
+                isValid = false;
+                document.getElementById('passwordError').textContent = 'Password must be 6-12 characters long and include at least one letter and one number.';
+            } else {
+                document.getElementById('passwordError').textContent = '';
+            }
+
+            if (!isValid) {
+                event.preventDefault();
+            }
+        });
+    </script>
+</body>
+</html>
